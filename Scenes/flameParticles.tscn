@@ -1,0 +1,167 @@
+[gd_scene format=3 uid="uid://l6ksy0ir2f0b"]
+
+[ext_resource type="Texture2D" uid="uid://dci7aojmoq0m1" path="res://Assets/CandleFlameTexture.png" id="1_1qaxi"]
+[ext_resource type="Texture2D" uid="uid://54fb3gvj4spx" path="res://Assets/SparkTexture.PNG" id="2_8y65n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yvmvm"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("1_1qaxi")
+albedo_texture_force_srgb = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_manxk"]
+_data = [Vector2(0.58108103, 0.9863946), 0.0, 0.0, 0, 0, Vector2(0.98648643, 0.054421782), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_myjrc"]
+curve = SubResource("Curve_manxk")
+
+[sub_resource type="Gradient" id="Gradient_8y65n"]
+offsets = PackedFloat32Array(0.16539924, 0.32509506, 0.6330798)
+colors = PackedColorArray(1, 1, 1, 1, 0.92593634, 0.49679768, 0.5046481, 1, 0.12298488, 0.12298488, 0.12298488, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_56hv8"]
+gradient = SubResource("Gradient_8y65n")
+
+[sub_resource type="Curve" id="Curve_ok6fm"]
+_data = [Vector2(0.00675676, 0.80272114), 0.0, 0.0, 0, 0, Vector2(1, 0.31292522), -1.118669, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8sekm"]
+curve = SubResource("Curve_ok6fm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lxyyf"]
+lifetime_randomness = 0.22
+particle_flag_rotate_y = true
+emission_shape = 1
+emission_sphere_radius = 0.2
+angle_min = -179.99998
+angle_max = 180.00002
+direction = Vector3(0, 1, 0)
+spread = 3.913
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = 0.49997765
+gravity = Vector3(0, 1, 0)
+scale_min = 0.9
+scale_max = 1.4
+scale_curve = SubResource("CurveTexture_8sekm")
+color = Color(1.4643909, 1.0351604, 0, 1)
+color_ramp = SubResource("GradientTexture1D_56hv8")
+alpha_curve = SubResource("CurveTexture_myjrc")
+
+[sub_resource type="QuadMesh" id="QuadMesh_rylvo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xn3gb"]
+render_priority = 1
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("2_8y65n")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_1q2nn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.125, 0.6666667), 0.0, 0.0, 0, 0, Vector2(0.2533784, 0.84353745), -2.255239, -2.255239, 0, 0, Vector2(0.33445942, 0.12925172), 0.0, 0.0, 0, 0, Vector2(0.41554052, 0.76190484), 0.0, 0.0, 0, 0, Vector2(0.49999994, 0.38095242), 0.0, 0.0, 0, 0, Vector2(0.56418914, 0.7414966), -1.7115645, -1.7115645, 0, 0, Vector2(0.67567563, 0.9047619), 0.0, 0.0, 0, 0, Vector2(0.7398648, 0.5986395), 0.0, 0.0, 0, 0, Vector2(0.81081074, 0.8503401), 0.0, 0.0, 0, 0, Vector2(0.9087837, 0.70748305), 0.0, 0.0, 0, 0, Vector2(1, 0.21768713), 0.0, 0.0, 0, 0]
+point_count = 12
+
+[sub_resource type="CurveTexture" id="CurveTexture_62gx8"]
+curve = SubResource("Curve_1q2nn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_02gog"]
+lifetime_randomness = 0.1
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.8
+emission_ring_radius = 0.6
+emission_ring_inner_radius = 0.4
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 1, 0)
+spread = 24.876
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+gravity = Vector3(0, 1, 0)
+scale_min = 0.04
+scale_max = 0.089999996
+scale_curve = SubResource("CurveTexture_62gx8")
+color = Color(2.7356017, 1.3871092, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_kme02"]
+
+[sub_resource type="Animation" id="Animation_v5sis"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.0]
+}
+
+[sub_resource type="Animation" id="Animation_7rpir"]
+resource_name = "lightAnim"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.53333336, 0.93333334, 1.2666667, 1.7333333, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [3.0, 8.37, 1.769, 3.0, 0.818, 6.356, 3.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w1f3e"]
+_data = {
+&"RESET": SubResource("Animation_v5sis"),
+&"lightAnim": SubResource("Animation_7rpir")
+}
+
+[node name="FlameVFX" type="Node3D" unique_id=2079534160]
+
+[node name="Fire" type="GPUParticles3D" parent="." unique_id=2090549886]
+material_override = SubResource("StandardMaterial3D_yvmvm")
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_lxyyf")
+draw_pass_1 = SubResource("QuadMesh_rylvo")
+
+[node name="Sparks" type="GPUParticles3D" parent="." unique_id=1987769272]
+material_override = SubResource("StandardMaterial3D_xn3gb")
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_02gog")
+draw_pass_1 = SubResource("QuadMesh_kme02")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1748151700]
+light_color = Color(0.92667913, 0.41216648, 0, 1)
+light_energy = 3.0
+shadow_enabled = true
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=545950557]
+light_color = Color(0.92667913, 0.41216648, 0, 1)
+light_energy = 3.0
+shadow_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1818412632]
+libraries/ = SubResource("AnimationLibrary_w1f3e")

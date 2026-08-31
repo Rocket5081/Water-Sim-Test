@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://cx61ifvr8tsan"]
+
+[ext_resource type="Script" uid="uid://cthwektv58j47" path="res://Scripts/Player.cs" id="1_rpqav"]
+[ext_resource type="PackedScene" uid="uid://l6ksy0ir2f0b" path="res://Scenes/flameParticles.tscn" id="2_kyqiw"]
+[ext_resource type="Script" uid="uid://br1tyopflsopk" path="res://Scripts/FPSCamera.cs" id="3_gntrk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rylvo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8sekm"]
+albedo_color = Color(0.015686275, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rylvo"]
+material = SubResource("StandardMaterial3D_8sekm")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kyqiw"]
+radius = 0.3
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1988768071 node_paths=PackedStringArray("FlameVFX", "FlameParticles", "Sparks")]
+script = ExtResource("1_rpqav")
+FlameVFX = NodePath("FlameVFX")
+FlameParticles = NodePath("FlameVFX/Fire")
+Sparks = NodePath("FlameVFX/Sparks")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2010167994]
+shape = SubResource("BoxShape3D_rylvo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1195807915]
+mesh = SubResource("BoxMesh_rylvo")
+
+[node name="FlameVFX" parent="." unique_id=2079534160 instance=ExtResource("2_kyqiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8963287, 0)
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=778229681 node_paths=PackedStringArray("player", "springArm")]
+script = ExtResource("3_gntrk")
+player = NodePath("..")
+springArm = NodePath("SpringArm3D")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=859466127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.5, 0)
+shape = SubResource("SphereShape3D_kyqiw")
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1713432993]
+transform = Transform3D(1, 0, 0, 0, 0.9679749, 0.25104713, 0, -0.25104713, 0.9679749, 0, 0, 0)
+
+[editable path="FlameVFX"]

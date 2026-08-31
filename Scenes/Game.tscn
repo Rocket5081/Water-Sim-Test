@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://riq34w5g084q"]
+
+[ext_resource type="PackedScene" uid="uid://cx61ifvr8tsan" path="res://Scenes/Player.tscn" id="1_iukft"]
+[ext_resource type="PackedScene" uid="uid://c4o44ubh4btnl" path="res://Scenes/flame_resource.tscn" id="2_gl6un"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lxyyf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lxyyf"]
+size = Vector3(50, 1, 50)
+
+[node name="Node3D" type="Node3D" unique_id=575858785]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=562596615]
+transform = Transform3D(1, 0, 0, 0, 0.68220574, 0.7311603, 0, -0.7311603, 0.68220574, 0, 10.353196, 11.371366)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1108604256]
+physics_material_override = SubResource("PhysicsMaterial_lxyyf")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D" unique_id=1036495320]
+use_collision = true
+size = Vector3(50, 1, 50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1114668810]
+shape = SubResource("BoxShape3D_lxyyf")
+
+[node name="CharacterBody3D" parent="." unique_id=1988768071 instance=ExtResource("1_iukft")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+
+[node name="FlameResource" parent="." unique_id=587018871 instance=ExtResource("2_gl6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1381893, 1.5907097, 17.287937)
+
+[node name="FlameResource2" parent="." unique_id=624560349 instance=ExtResource("2_gl6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1381893, 1.5907097, -15.497425)
+
+[node name="FlameResource3" parent="." unique_id=841251261 instance=ExtResource("2_gl6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.651247, 1.5907097, -15.497425)
+
+[node name="FlameResource4" parent="." unique_id=671846705 instance=ExtResource("2_gl6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.651247, 1.5907097, 2.4280472)

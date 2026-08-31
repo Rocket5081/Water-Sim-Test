@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cfoiph8iepao8"]
+
+[ext_resource type="Shader" uid="uid://tq3lwlbkl8nj" path="res://Shaders/Ocean.gdshader" id="1_slmpt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rylvo"]
+render_priority = 0
+shader = ExtResource("1_slmpt")
+shader_parameter/out_color = Color(0, 2.2706914, 2.2706914, 1)
+shader_parameter/amount = 0.36500001081773
+shader_parameter/beer_factor = 3.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lxyyf"]
+material = SubResource("ShaderMaterial_rylvo")
+size = Vector2(1000, 1000)
+subdivide_width = 100
+subdivide_depth = 100
+
+[node name="Water" type="Node3D" unique_id=1147448212]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=717760753]
+mesh = SubResource("PlaneMesh_lxyyf")

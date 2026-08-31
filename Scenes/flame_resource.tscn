@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://c4o44ubh4btnl"]
+
+[ext_resource type="Script" uid="uid://cw2eaqltimhtx" path="res://Scripts/FlameCollect.cs" id="1_lb3wy"]
+[ext_resource type="PackedScene" uid="uid://l6ksy0ir2f0b" path="res://Scenes/flameParticles.tscn" id="2_ixaam"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lxyyf"]
+
+[sub_resource type="Curve" id="Curve_manxk"]
+_data = [Vector2(0.58108103, 0.9863946), 0.0, 0.0, 0, 0, Vector2(0.98648643, 0.054421782), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_myjrc"]
+curve = SubResource("Curve_manxk")
+
+[sub_resource type="Gradient" id="Gradient_8y65n"]
+offsets = PackedFloat32Array(0.16539924, 0.32509506, 0.6330798)
+colors = PackedColorArray(1, 1, 1, 1, 0.92593634, 0.49679768, 0.5046481, 1, 0.12298488, 0.12298488, 0.12298488, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_56hv8"]
+gradient = SubResource("Gradient_8y65n")
+
+[sub_resource type="Curve" id="Curve_ok6fm"]
+_data = [Vector2(0.00675676, 0.80272114), 0.0, 0.0, 0, 0, Vector2(1, 0.31292522), -1.118669, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8sekm"]
+curve = SubResource("Curve_ok6fm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lb3wy"]
+lifetime_randomness = 0.22
+particle_flag_rotate_y = true
+emission_shape = 1
+emission_sphere_radius = 0.2
+angle_min = -179.99998
+angle_max = 180.00002
+direction = Vector3(0, 1, 0)
+spread = 3.913
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = 0.49997765
+gravity = Vector3(0, 1, 0)
+scale_min = 0.9
+scale_max = 1.4
+scale_curve = SubResource("CurveTexture_8sekm")
+color = Color(1.4643909, 1.0351604, 1.4643909, 1)
+color_ramp = SubResource("GradientTexture1D_56hv8")
+alpha_curve = SubResource("CurveTexture_myjrc")
+
+[node name="FlameResource" type="Area3D" unique_id=587018871]
+script = ExtResource("1_lb3wy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1327829659]
+shape = SubResource("BoxShape3D_lxyyf")
+
+[node name="FlameVFX" parent="." unique_id=2079534160 instance=ExtResource("2_ixaam")]
+
+[node name="Fire" parent="FlameVFX" index="0" unique_id=2090549886]
+process_material = SubResource("ParticleProcessMaterial_lb3wy")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+
+[editable path="FlameVFX"]
