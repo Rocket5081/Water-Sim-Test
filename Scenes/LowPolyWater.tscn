@@ -15,7 +15,7 @@ size = Vector2(1000, 1000)
 subdivide_width = 100
 subdivide_depth = 100
 
-[node name="Water" type="Node3D" unique_id=1147448212]
+[node name="Basic Water" type="Node3D" unique_id=1147448212]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=717760753]
 mesh = SubResource("PlaneMesh_lxyyf")

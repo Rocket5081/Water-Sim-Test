@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://b2d684rdsgcee"]
+
+[ext_resource type="Script" uid="uid://bk4jxosm8fsqf" path="res://Scripts/main.cs" id="1_6q5w0"]
+[ext_resource type="Shader" uid="uid://d1xe56vtw5c7s" path="res://Shaders/simulation.gdshader" id="1_ph4d7"]
+[ext_resource type="Shader" uid="uid://v3wvmylpqv6y" path="res://Shaders/buffer.tres" id="2_p17gs"]
+[ext_resource type="Shader" uid="uid://dr3mnaiiqc1mq" path="res://Shaders/main.tres" id="2_psfq7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8sekm"]
+
+[sub_resource type="Sky" id="Sky_rylvo"]
+sky_material = SubResource("ProceduralSkyMaterial_8sekm")
+
+[sub_resource type="Environment" id="Environment_lxyyf"]
+background_mode = 2
+sky = SubResource("Sky_rylvo")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_cfi77"]
+viewport_path = NodePath("Simulation")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8sekm"]
+resource_local_to_scene = true
+shader = ExtResource("2_p17gs")
+shader_parameter/Texture2DParameter = SubResource("ViewportTexture_cfi77")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lxyyf"]
+viewport_path = NodePath("Collision")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_yvmvm"]
+viewport_path = NodePath("SimulationBuffer")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lxyyf"]
+resource_local_to_scene = true
+shader = ExtResource("1_ph4d7")
+shader_parameter/sim_tex = SubResource("ViewportTexture_yvmvm")
+shader_parameter/col_tex = SubResource("ViewportTexture_lxyyf")
+shader_parameter/phase = 0.2
+shader_parameter/attenuation = 0.999
+shader_parameter/deltaUV = 3.0
+
+[sub_resource type="Environment" id="Environment_psfq7"]
+background_mode = 1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rylvo"]
+viewport_path = NodePath("Simulation")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_p17gs"]
+viewport_path = NodePath("Simulation")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rylvo"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_psfq7")
+shader_parameter/simulation2 = SubResource("ViewportTexture_p17gs")
+shader_parameter/amplitude = 0.5
+shader_parameter/refraction_strength = 1.0
+shader_parameter/simulation = SubResource("ViewportTexture_rylvo")
+shader_parameter/deep_water = Color(0, 0, 0.658824, 1)
+shader_parameter/shallow_water = Color(0, 0.568627, 1, 1)
+shader_parameter/murkiness = 0.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lxyyf"]
+material = SubResource("ShaderMaterial_rylvo")
+size = Vector2(10.1, 10.1)
+subdivide_width = 500
+subdivide_depth = 500
+
+[node name="Main" type="Node3D" unique_id=2103331622]
+script = ExtResource("1_6q5w0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=537561403]
+transform = Transform3D(1, 0, 0, 0, 0.9149213, 0.40363237, 0, -0.40363237, 0.9149213, 0, 6.628101, 7.232949)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=994922113]
+environment = SubResource("Environment_lxyyf")
+
+[node name="SimulationBuffer" type="SubViewport" parent="." unique_id=1062297966]
+size = Vector2i(514, 512)
+render_target_clear_mode = 2
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="SimulationBuffer" unique_id=446948558]
+material = SubResource("ShaderMaterial_8sekm")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Simulation" type="SubViewport" parent="." unique_id=1264734507]
+size = Vector2i(514, 514)
+render_target_clear_mode = 2
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="Simulation" unique_id=2147042616]
+material = SubResource("ShaderMaterial_lxyyf")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Collision" type="SubViewport" parent="." unique_id=112376746]
+render_target_update_mode = 4
+
+[node name="WaterCamera" type="Camera3D" parent="Collision" unique_id=2104026862]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -5, 0)
+keep_aspect = 0
+cull_mask = 524288
+environment = SubResource("Environment_psfq7")
+projection = 1
+current = true
+size = 10.1
+near = 0.001
+far = 5.0
+
+[node name="Water" type="MeshInstance3D" parent="." unique_id=1531805671]
+mesh = SubResource("PlaneMesh_lxyyf")
+
+[node name="Walls" type="Node3D" parent="." unique_id=1572107480]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Walls" unique_id=1562069243]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9841576, -5.7012925)
+size = Vector3(12.1, 5, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Walls" unique_id=1243917003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9841576, 5.5660853)
+size = Vector3(12.1, 5, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Walls" unique_id=72703864]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.55209, -1.9841576, -0.06208515)
+size = Vector3(12.1, 5, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Walls" unique_id=1373232018]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5.58118, -1.9841576, -0.06208515)
+size = Vector3(12.1, 5, 1)
+
+[node name="MainCamera" type="Camera3D" parent="." unique_id=542212223]
+transform = Transform3D(1, 0, 0, 0, 0.6637729, 0.7479343, 0, -0.7479343, 0.6637729, 0, 7.005314, 5.551792)
+cull_mask = 524287
