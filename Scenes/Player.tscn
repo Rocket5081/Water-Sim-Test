@@ -15,6 +15,12 @@ material = SubResource("StandardMaterial3D_8sekm")
 [sub_resource type="SphereShape3D" id="SphereShape3D_kyqiw"]
 radius = 0.3
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rylvo"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lxyyf"]
+material = SubResource("StandardMaterial3D_rylvo")
+
 [node name="CharacterBody3D" type="CharacterBody3D" unique_id=1988768071 node_paths=PackedStringArray("FlameVFX", "FlameParticles", "Sparks")]
 script = ExtResource("1_rpqav")
 FlameVFX = NodePath("FlameVFX")
@@ -41,5 +47,10 @@ shape = SubResource("SphereShape3D_kyqiw")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1713432993]
 transform = Transform3D(1, 0, 0, 0, 0.9679749, 0.25104713, 0, -0.25104713, 0.9679749, 0, 0, 0)
+cull_mask = 524287
+
+[node name="WaterCollision" type="MeshInstance3D" parent="." unique_id=891696354]
+layers = 524288
+mesh = SubResource("BoxMesh_lxyyf")
 
 [editable path="FlameVFX"]

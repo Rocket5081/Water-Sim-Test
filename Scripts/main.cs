@@ -7,19 +7,13 @@ public partial class main : Node3D
 	public override void _Ready()
 	{
 		ColorRect cr = GetNode<ColorRect>("Simulation/ColorRect");
-        MeshInstance3D water = GetNode<MeshInstance3D>("water");
+        MeshInstance3D water = GetNode<MeshInstance3D>("Water");
 
         SubViewport simulation = GetNode<SubViewport>("Simulation");
         SubViewport collision = GetNode<SubViewport>("Collision");
 
         Texture2D simTex = simulation.GetTexture();
         Texture2D colTex = collision.GetTexture();
-
-        // Set the shader parameters on the ColorRect's material
-        ShaderMaterial crMaterial = cr.Material as ShaderMaterial;
-
-        crMaterial.SetShaderParameter("sim_tex", simTex);
-        crMaterial.SetShaderParameter("col_tex", colTex);
 
         // Set the shader parameter on the water material
         ShaderMaterial waterMaterial = water.Mesh.SurfaceGetMaterial(0) as ShaderMaterial;
