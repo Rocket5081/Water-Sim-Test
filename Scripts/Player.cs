@@ -17,6 +17,14 @@ public partial class Player : CharacterBody3D
     private float timeRemaining;
     private bool active = false;
 
+	[Export] public bool IsInWater = false;
+
+    private float waterSurfaceY;
+
+    [Export] public float WaterFloatStrength = 5.0f;
+
+    [Export] public float MaxWaterVerticalSpeed = 3.0f;
+
 	public override void _Ready(){
 		StartShrink();
 	}
@@ -49,10 +57,22 @@ public partial class Player : CharacterBody3D
         Sparks.AmountRatio = amountRatio;
 
 		// Add the gravity.
-		if (!IsOnFloor())
-		{
-			velocity += GetGravity() * (float)delta;
-		}
+		if (IsInWater)
+    	{
+        	float difference = waterSurfaceY - GlobalPosition.Y;
+
+        	velocity.Y = difference * WaterFloatStrength;
+
+        	velocity.Y = Mathf.Clamp(
+            	velocity.Y,
+            	-MaxWaterVerticalSpeed,
+           		MaxWaterVerticalSpeed
+        	);
+    	}
+    	else if (!IsOnFloor())
+    	{
+        	velocity += GetGravity() * (float)delta;
+    	}
 
 		// Handle Jump.
 		if (Input.IsActionJustPressed("jump") && IsOnFloor())
@@ -94,5 +114,16 @@ public partial class Player : CharacterBody3D
     {
         timeRemaining = Mathf.Min(timeRemaining + bonusSeconds, totalDuration);
         // clamped so pickups can't scale the particle bigger than StartScale
+    }
+
+    public void SetWaterSurface(float surfaceY)
+    {
+        waterSurfaceY = surfaceY;
+        IsInWater = true;
+    }
+
+    public void ExitWater()
+    {
+        IsInWater = false;
     }
 }

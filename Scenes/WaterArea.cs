@@ -6,7 +6,7 @@ public partial class WaterArea : Area3D
 
     private void OnBodyEntered(Node3D body)
     {
-        if (body is CharacterBody3d player)
+        if (body is Player player)
         {
             player.IsInWater = true;
             player.SetWaterSurface(GlobalPosition.Y + SurfaceOffset);
@@ -15,7 +15,7 @@ public partial class WaterArea : Area3D
 
     private void OnBodyExited(Node3D body)
     {
-        if (body is CharacterBody3d player)
+        if (body is Player player)
         {
             player.IsInWater = false;
         }

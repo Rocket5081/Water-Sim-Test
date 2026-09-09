@@ -11,7 +11,7 @@ op_type = 3
 
 [sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_ik3n4"]
 size = Vector2(759.99994, 420)
-expression = "vec3 duv = vec3(4.0 / 514.0, 4.0 / 514.0, 0);
+expression = "vec3 duv = vec3(4.0 / 1024.0, 4.0 / 1024.0, 0);
 float v1 = texture(sim, UV - duv.xz).y;
 float v2 = texture(sim, UV + duv.xz).y;
 float v3 = texture(sim, UV - duv.zy).y;
@@ -142,7 +142,7 @@ nodes/fragment/12/position = Vector2(-848, -336)
 nodes/fragment/12/size = Vector2(759.99994, 420)
 nodes/fragment/12/input_ports = "0,8,sim;"
 nodes/fragment/12/output_ports = "0,4,normal;"
-nodes/fragment/12/expression = "vec3 duv = vec3(4.0 / 514.0, 4.0 / 514.0, 0);
+nodes/fragment/12/expression = "vec3 duv = vec3(4.0 / 1024.0, 4.0 / 1024.0, 0);
 float v1 = texture(sim, UV - duv.xz).y;
 float v2 = texture(sim, UV + duv.xz).y;
 float v3 = texture(sim, UV - duv.zy).y;

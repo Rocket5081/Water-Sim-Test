@@ -16,6 +16,7 @@ material = SubResource("StandardMaterial3D_8sekm")
 radius = 0.3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rylvo"]
+shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_lxyyf"]
@@ -26,6 +27,7 @@ script = ExtResource("1_rpqav")
 FlameVFX = NodePath("FlameVFX")
 FlameParticles = NodePath("FlameVFX/Fire")
 Sparks = NodePath("FlameVFX/Sparks")
+WaterFloatStrength = 2.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2010167994]
 shape = SubResource("BoxShape3D_rylvo")
