@@ -4,8 +4,8 @@
 [ext_resource type="Shader" uid="uid://d1xe56vtw5c7s" path="res://Shaders/simulation.gdshader" id="1_ph4d7"]
 [ext_resource type="Shader" uid="uid://v3wvmylpqv6y" path="res://Shaders/buffer.tres" id="2_p17gs"]
 [ext_resource type="Shader" uid="uid://dr3mnaiiqc1mq" path="res://Shaders/main.tres" id="2_psfq7"]
-[ext_resource type="PackedScene" uid="uid://cx61ifvr8tsan" path="res://Scenes/Player.tscn" id="4_3ln1k"]
 [ext_resource type="Script" uid="uid://cnorubstx8tk3" path="res://Scenes/WaterArea.cs" id="5_qt61r"]
+[ext_resource type="PackedScene" uid="uid://dbsrd50uwbx26" path="res://Scenes/ToonTest.tscn" id="6_xqaaw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8sekm"]
 
@@ -36,7 +36,7 @@ shader = ExtResource("1_ph4d7")
 shader_parameter/sim_tex = SubResource("ViewportTexture_yvmvm")
 shader_parameter/col_tex = SubResource("ViewportTexture_lxyyf")
 shader_parameter/phase = 0.18
-shader_parameter/attenuation = 0.995
+shader_parameter/attenuation = 0.999
 shader_parameter/deltaUV = 3.0
 
 [sub_resource type="Environment" id="Environment_psfq7"]
@@ -53,8 +53,8 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("2_psfq7")
 shader_parameter/simulation2 = SubResource("ViewportTexture_p17gs")
-shader_parameter/amplitude = 0.5
-shader_parameter/refraction_strength = 1.0
+shader_parameter/amplitude = 0.3
+shader_parameter/refraction_strength = 0.1
 shader_parameter/simulation = SubResource("ViewportTexture_rylvo")
 shader_parameter/deep_water = Color(0, 0, 0.658824, 1)
 shader_parameter/shallow_water = Color(0, 0.568627, 1, 1)
@@ -126,7 +126,7 @@ mesh = SubResource("PlaneMesh_lxyyf")
 [node name="Area3D" type="Area3D" parent="Water" unique_id=414440477]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49358702, 0)
 script = ExtResource("5_qt61r")
-SurfaceOffset = -0.1
+SurfaceOffset = -0.3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Water/Area3D" unique_id=1108371814]
 shape = SubResource("BoxShape3D_lxyyf")
@@ -149,8 +149,20 @@ size = Vector3(12.1, 5, 1)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5.58118, -1.9841576, -0.06208515)
 size = Vector3(12.1, 5, 1)
 
-[node name="CharacterBody3D" parent="." unique_id=1988768071 instance=ExtResource("4_3ln1k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8908577, 1.5507619, 2.6659198)
+[node name="ToonPlayer" parent="." unique_id=2059644741 instance=ExtResource("6_xqaaw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7370424, 0)
+
+[node name="Gully2" parent="ToonPlayer" index="0" unique_id=812013276]
+transform = Transform3D(-2.1855694e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.1855694e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" parent="ToonPlayer" index="1" unique_id=2106288351]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.1683059, 0)
+
+[node name="WaterCollision" parent="ToonPlayer" index="3" unique_id=1184313689]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.9597659, -0.17833711)
 
 [connection signal="body_entered" from="Water/Area3D" to="Water/Area3D" method="OnBodyEntered"]
 [connection signal="body_exited" from="Water/Area3D" to="Water/Area3D" method="OnBodyExited"]
+
+[editable path="ToonPlayer"]
+[editable path="ToonPlayer/FlameVFX"]

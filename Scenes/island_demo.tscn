@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://h2iwie0bxn6w"]
 
-[ext_resource type="PackedScene" uid="uid://cx61ifvr8tsan" path="res://Scenes/Player.tscn" id="2_lo5vg"]
+[ext_resource type="PackedScene" uid="uid://dbsrd50uwbx26" path="res://Scenes/ToonTest.tscn" id="1_unr48"]
 [ext_resource type="PackedScene" uid="uid://dj46yerhnspaq" path="res://Assets/TestIsland.glb" id="2_oy1lv"]
 [ext_resource type="PackedScene" uid="uid://cfoiph8iepao8" path="res://Scenes/LowPolyWater.tscn" id="3_lo5vg"]
 
@@ -9,9 +9,9 @@ data = PackedVector3Array(-0.7793, 0.0881, -0.2478, -0.805, 0.072799996, -0.2488
 
 [node name="Island Demo" type="Node3D" unique_id=24733312]
 
-[node name="CharacterBody3D" parent="." unique_id=1988768071 instance=ExtResource("2_lo5vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.844152, 70.82113, 76.772095)
-ShrinkDuration = 300.0
+[node name="ToonPlayer" parent="." unique_id=2059644741 instance=ExtResource("1_unr48")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 74.80238, 0)
+ShrinkDuration = 500.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1068880864]
 transform = Transform3D(1, 0, 0, 0, -0.6878985, 0.72580695, 0, -0.72580695, -0.6878985, 0, 130.67812, -169.6844)
@@ -28,3 +28,4 @@ shape = SubResource("ConcavePolygonShape3D_oy1lv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.8, 0)
 
 [editable path="TestIsland"]
+[editable path="Water"]
