@@ -3,8 +3,8 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
-	public const float Speed = 20.0f;
-	public const float JumpVelocity = 16.5f;
+	public const float Speed = 10.0f;
+	public const float JumpVelocity = 9.5f;
 
 	[Export] public bool IsInWater = false;
 	[Export] public AnimationPlayer Anim;
