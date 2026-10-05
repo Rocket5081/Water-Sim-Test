@@ -3,76 +3,41 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
-	public const float Speed = 10.0f;
-	public const float JumpVelocity = 6.5f;
-	[Export] public Node3D FlameVFX;
-	[Export] public GpuParticles3D FlameParticles;
-	[Export] public GpuParticles3D Sparks;
-
-	[Export] public float ShrinkDuration = 30.0f; // total lifespan in seconds
-    [Export] public Vector3 StartScale = Vector3.One;
-    [Export] public Vector3 EndScale = Vector3.Zero;
-
-    private float totalDuration;
-    private float timeRemaining;
-    private bool active = false;
+	public const float Speed = 20.0f;
+	public const float JumpVelocity = 16.5f;
 
 	[Export] public bool IsInWater = false;
+	[Export] public AnimationPlayer Anim;
 
     private float waterSurfaceY;
 
-    [Export] public float WaterFloatStrength = 5.0f;
-
-    [Export] public float MaxWaterVerticalSpeed = 3.0f;
+	[Export] public float WaterFloatStrength = 1.0f;    
+	[Export] public float MaxWaterVerticalSpeed = 2.0f; 
+	[Export] public float WaterFloatOffset = -2.0f;
 
 	public override void _Ready(){
-		StartShrink();
+		
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
+		
 		Vector3 velocity = Velocity;
 
 		if(Input.IsActionJustPressed("exit")){
 			GetTree().Quit();
 		}
 
-		if (!active) return;
-
-        timeRemaining -= (float)delta;
-
-        if (timeRemaining <= 0)
-        {
-            timeRemaining = 0;
-            active = false;
-            FlameVFX.Visible = false;
-            return;
-        }
-
-        float t = 1f - (timeRemaining / totalDuration);
-        FlameVFX.Scale = StartScale.Lerp(EndScale, t);
-
-		float amountRatio = Mathf.Lerp(1.0f, 0.0f, t);
-        FlameParticles.AmountRatio = amountRatio;
-        Sparks.AmountRatio = amountRatio;
-
-		// Add the gravity.
 		if (IsInWater)
-    	{
-        	float difference = waterSurfaceY - GlobalPosition.Y;
-
-        	velocity.Y = difference * WaterFloatStrength;
-
-        	velocity.Y = Mathf.Clamp(
-            	velocity.Y,
-            	-MaxWaterVerticalSpeed,
-           		MaxWaterVerticalSpeed
-        	);
-    	}
-    	else if (!IsOnFloor())
-    	{
-        	velocity += GetGravity() * (float)delta;
-    	}
+		{
+    		float targetY = waterSurfaceY + WaterFloatOffset;
+    		float difference = targetY - GlobalPosition.Y;
+    		velocity.Y = Mathf.Clamp(difference * WaterFloatStrength, -MaxWaterVerticalSpeed, MaxWaterVerticalSpeed);
+		}
+		else if (!IsOnFloor())
+		{
+    		velocity += GetGravity() * (float)delta;
+		}
 
 		// Handle Jump.
 		if (Input.IsActionJustPressed("jump") && IsOnFloor())
@@ -80,8 +45,6 @@ public partial class Player : CharacterBody3D
 			velocity.Y = JumpVelocity;
 		}
 
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 inputDir = Input.GetVector("left", "right", "forward", "back");
 		Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 		if (direction != Vector3.Zero)
@@ -97,24 +60,25 @@ public partial class Player : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
+		UpdateAnimation(direction);
 	}
 
-	public void StartShrink()
-    {
-        totalDuration = ShrinkDuration;
-        timeRemaining = ShrinkDuration;
-        active = true;
-        FlameVFX.Scale = StartScale;
-		FlameParticles.AmountRatio = 1.0f;
-		Sparks.AmountRatio = 1.0f;
-        FlameVFX.Visible = true;
-    }
+	private void UpdateAnimation(Vector3 direction)
+	{
+		string next;
 
-	public void AddTime(float bonusSeconds)
-    {
-        timeRemaining = Mathf.Min(timeRemaining + bonusSeconds, totalDuration);
-        // clamped so pickups can't scale the particle bigger than StartScale
-    }
+		if (IsInWater)
+    		next = direction != Vector3.Zero ? "Swim" : "Idle";
+		else if (!IsOnFloor())
+    		next = Velocity.Y > 0.5f ? "Jump" : "Fall";
+    	else if (direction != Vector3.Zero)
+    	    next = "WalkCycle";
+    	else
+    	    next = "Idle";
+
+    	if (Anim.CurrentAnimation != next)
+    	    Anim.Play(next, 0.2); 
+	}
 
     public void SetWaterSurface(float surfaceY)
     {
@@ -124,6 +88,6 @@ public partial class Player : CharacterBody3D
 
     public void ExitWater()
     {
-        IsInWater = false;
+		IsInWater = false;
     }
 }

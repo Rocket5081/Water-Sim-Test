@@ -31,8 +31,8 @@ void fragment() {
 	
 	NORMAL = normalize(cross(dFdx(VERTEX), dFdy(VERTEX)));
 	METALLIC = 0.6;
-	SPECULAR = 0.5;
-	ROUGHNESS = 0.3;
+	SPECULAR = 0.9;
+	ROUGHNESS = 0.1;
 	ALBEDO = out_color.xyz;
 	
 	float depth = texture(DEPTH_TEXTURE, SCREEN_UV).r;

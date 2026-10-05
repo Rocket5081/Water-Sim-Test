@@ -2,7 +2,7 @@ using Godot;
 
 public partial class WaterArea : Area3D
 {
-    [Export] public float SurfaceOffset = 0.0f;
+    [Export] public float SurfaceOffset = -0.5f;
 
     private void OnBodyEntered(Node3D body)
     {
@@ -17,7 +17,7 @@ public partial class WaterArea : Area3D
     {
         if (body is Player player)
         {
-            player.IsInWater = false;
+            player.ExitWater();
         }
     }
 }

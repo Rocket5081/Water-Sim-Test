@@ -4,7 +4,7 @@
 [ext_resource type="Shader" uid="uid://v3wvmylpqv6y" path="res://Shaders/buffer.tres" id="2_7crbu"]
 [ext_resource type="Shader" uid="uid://d1xe56vtw5c7s" path="res://Shaders/simulation.gdshader" id="3_t2gcx"]
 [ext_resource type="Shader" uid="uid://dr3mnaiiqc1mq" path="res://Shaders/main.tres" id="4_5jaqf"]
-[ext_resource type="Script" uid="uid://cnorubstx8tk3" path="res://Scenes/WaterArea.cs" id="5_tw8gu"]
+[ext_resource type="Script" uid="uid://cnorubstx8tk3" path="res://Scripts/WaterArea.cs" id="5_tw8gu"]
 [ext_resource type="PackedScene" uid="uid://dbsrd50uwbx26" path="res://Scenes/ToonTest.tscn" id="6_nywls"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8sekm"]
@@ -16,25 +16,25 @@ sky_material = SubResource("ProceduralSkyMaterial_8sekm")
 background_mode = 2
 sky = SubResource("Sky_rylvo")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_tw8gu"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_pkftd"]
 viewport_path = NodePath("Main/Simulation")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_otqxo"]
 resource_local_to_scene = true
 shader = ExtResource("2_7crbu")
-shader_parameter/Texture2DParameter = SubResource("ViewportTexture_tw8gu")
+shader_parameter/Texture2DParameter = SubResource("ViewportTexture_pkftd")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_5jaqf"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_0yy2e"]
 viewport_path = NodePath("Main/Collision")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_t2gcx"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_1ysvt"]
 viewport_path = NodePath("Main/SimulationBuffer")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_crj18"]
 resource_local_to_scene = true
 shader = ExtResource("3_t2gcx")
-shader_parameter/sim_tex = SubResource("ViewportTexture_t2gcx")
-shader_parameter/col_tex = SubResource("ViewportTexture_5jaqf")
+shader_parameter/sim_tex = SubResource("ViewportTexture_1ysvt")
+shader_parameter/col_tex = SubResource("ViewportTexture_0yy2e")
 shader_parameter/phase = 0.18
 shader_parameter/attenuation = 0.995
 shader_parameter/deltaUV = 3.0

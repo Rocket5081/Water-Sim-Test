@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://cfoiph8iepao8"]
 
 [ext_resource type="Shader" uid="uid://tq3lwlbkl8nj" path="res://Shaders/Ocean.gdshader" id="1_slmpt"]
-[ext_resource type="Script" uid="uid://cnorubstx8tk3" path="res://Scenes/WaterArea.cs" id="2_0yy2e"]
+[ext_resource type="Script" uid="uid://cnorubstx8tk3" path="res://Scripts/WaterArea.cs" id="2_0yy2e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1ysvt"]
+size = Vector3(1000, 1, 1000)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rylvo"]
 render_priority = 0
@@ -16,22 +19,20 @@ size = Vector2(1000, 1000)
 subdivide_width = 100
 subdivide_depth = 100
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1ysvt"]
-size = Vector3(1000, 1, 1000)
-
 [node name="Basic Water" type="Node3D" unique_id=1147448212]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=312324623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0994244, 0.5381336, -2.8817816)
+script = ExtResource("2_0yy2e")
+SurfaceOffset = -0.1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2010247838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.4802399, 0)
+shape = SubResource("BoxShape3D_1ysvt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=717760753]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0994244, 1.0317206, -2.8817816)
 mesh = SubResource("PlaneMesh_lxyyf")
 
-[node name="Area3D" type="Area3D" parent="MeshInstance3D" unique_id=312324623]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49358702, 0)
-script = ExtResource("2_0yy2e")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D" unique_id=2010247838]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.4802399, 0)
-shape = SubResource("BoxShape3D_1ysvt")
-
-[connection signal="body_entered" from="MeshInstance3D/Area3D" to="MeshInstance3D/Area3D" method="OnBodyEntered"]
-[connection signal="body_exited" from="MeshInstance3D/Area3D" to="MeshInstance3D/Area3D" method="OnBodyExited"]
+[connection signal="body_entered" from="Area3D" to="Area3D" method="OnBodyEntered"]
+[connection signal="body_exited" from="Area3D" to="Area3D" method="OnBodyExited"]

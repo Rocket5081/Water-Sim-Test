@@ -6,10 +6,10 @@ public partial class FPSCamera : Node3D
     [Export] public SpringArm3D springArm; // assign the child SpringArm3D in the inspector
 
     [Export] public float cameraSpeed = 2f;
-    [Export] Vector2 cameraXBound = new Vector2(0.75f, -0.75f);
+    [Export] Vector2 cameraXBound = new Vector2(0.95f, -0.95f);
     [Export] float maxCameraMovementPerFrame = 15f;
 
-    [Export] public float springArmLength = 4f; // how far behind the player the camera sits
+    [Export] public float springArmLength = 7f; // how far behind the player the camera is
 
     float frameDelta;
 
@@ -31,7 +31,7 @@ public partial class FPSCamera : Node3D
         if (@event is InputEventMouseMotion mouseMovement)
         {
             Vector2 velocity = mouseMovement.Relative;
-            Vector3 rotation = Rotation; // now rotating the PIVOT, not the camera directly
+            Vector3 rotation = Rotation;
 
             velocity = new Vector2(
                 Mathf.Clamp(velocity.X, -maxCameraMovementPerFrame, maxCameraMovementPerFrame),
